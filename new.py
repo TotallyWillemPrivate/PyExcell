@@ -17,7 +17,7 @@ columnIndex = {}
 verrijktcolumn = str(get_column_letter(sheet.max_column+1)) 
 verrijktrow = str(1)
 verrijktcell = verrijktcolumn+verrijktrow
-sheet[verrijktcell] = 'VERRIJKT'
+sheet[verrijktcell] = 'VERRIJKT_DOOR'
 
 #vullen van de index met kolomkoppen
 for column in range(1,sheet.max_column):
@@ -63,7 +63,7 @@ for row in range(2,sheet.max_row+1):
             sheet[cellTelnr] = 'geen postcodeveld?'
 
 #opslaan van de nieuwe updated versie.
-wb.save('updatedtext.xlsx')
+wb.save('updatedtext.csv')
 
 """ 
 Stappenplan:
@@ -77,7 +77,7 @@ De data van EDM met verwerkt worden
 Dan komt het moeilijkste:
 alle regels met een leeg telnr moeten worden gekopieerd naar een ander excel blad
 (en het liefst verwijderd uit het oorspronkelijke)
-Dat moet worden opgeslagen als 'geweigerd'
+Dat moet worden opgeslagen als 'geentel'
 Kopie van oorspronkelijke moet worden opgeslagen als 'verrijkt' 
 
 """
