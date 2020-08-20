@@ -1,11 +1,12 @@
 import openpyxl
+from openpyxl import load_workbook
 import pprint
 import re
 
 geenTelnr = []
 
 def excelToDict(file):
-    wb = openpyxl.load_workbook(file)
+    wb = load_workbook(file)
     sheet = wb[wb.sheetnames[0]]
 
     totalFile= []
@@ -22,7 +23,7 @@ def excelToDict(file):
 
 def cleanFile(file):
     for record in file:
-        #eerst postcode opmaken en controleren
+        #Postcode
         rePostcode = re.search(r'(\d{4})\s?([a-zA-Z]{2})', str(record['ADDR_ZIP']))
         if rePostcode == None:      
             if record['TELNR'] == None:
@@ -30,14 +31,13 @@ def cleanFile(file):
         else:
             record['ADDR_ZIP'] = str(rePostcode[1]) + ' ' + str(rePostcode[2]).upper()
         
-        #emailadressen allemaal in lowercase (als emailveld bestaat)
+        #Email
         mailAanwezig = 'EMAIL' in record.keys()
         if mailAanwezig == True:
             record['EMAIL'] = str(record['EMAIL']).lower()
-
-        #telefoonnummers op maat maken (0 aan het begin weg halen) en verrijken (dit moet helemaal aan het eind?)
     return file
 
+#Telefoon (aparte functie, zodat scheiding van bestand goed gebeurt)
 def checkPhone(file):
     for record in file:
         if record['TELNR'] != None:
